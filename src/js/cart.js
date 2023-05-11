@@ -31,4 +31,18 @@ function cartItemTemplate(item) {
   return newItem;
 }
 
+function getItemCount() {
+  let cartItems = localStorage.getItem("so-cart");
+  if (cartItems === null || typeof cartItems === "undefined") {
+      document.querySelector("#itemcount").textContent = "0";
+      // console.log("0");
+
+  } else {
+      let parsedCartItems = [JSON.parse(cartItems)];
+      document.querySelector('#itemcount').textContent = parsedCartItems.length;
+  }
+
+}
+getItemCount()
+
 renderCartContents();
