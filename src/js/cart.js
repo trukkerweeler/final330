@@ -1,48 +1,36 @@
-import { getLocalStorage } from "./utils.mjs";
+import { getLocalStorage, loadHeaderFooter } from "./utils.mjs";
+import ShoppingCart from "./ShoppingCart.mjs";
 
-function renderCartContents() {
-  let cartItems; // = getLocalStorage("so-cart");
-  try {
-    cartItems = JSON.parse(localStorage.getItem("so-cart"));
-    if (!Array.isArray(cartItems)) cartItems = [cartItems];
-  } catch(err) {
-    cartItems = [];
-  }
-  const htmlItems = cartItems.map((item) => cartItemTemplate(item));
-  document.querySelector(".product-list").innerHTML = htmlItems.join("");
-}
+loadHeaderFooter();
 
-function cartItemTemplate(item) {
-  const newItem = `<li class="cart-card divider">
-  <a href="#" class="cart-card__image">
-    <img
-      src="${item.Image}"
-      alt="${item.Name}"
-    />
-  </a>
-  <a href="#">
-    <h2 class="card__name">${item.Name}</h2>
-  </a>
-  <p class="cart-card__color">${item.Colors[0].ColorName}</p>
-  <p class="cart-card__quantity">qty: 1</p>
-  <p class="cart-card__price">$${item.FinalPrice}</p>
-</li>`;
+const cart = new ShoppingCart("so-cart", ".product-list");
+cart.renderCartContents();
 
-  return newItem;
-}
+// function renderCartContents() {
+//   let cartItems; // = getLocalStorage("so-cart");
+//   try {
+//     cartItems = JSON.parse(localStorage.getItem("so-cart"));
+//     if (!Array.isArray(cartItems)) cartItems = [cartItems];
+//   } catch(err) {
+//     cartItems = [];
+//   }
+//   const htmlItems = cartItems.map((item) => cartItemTemplate(item));
+//   document.querySelector(".product-list").innerHTML = htmlItems.join("");
+// }
 
-function getItemCount() {
-  let cartItems = localStorage.getItem("so-cart");
-  if (cartItems === null || typeof cartItems === "undefined") {
-      document.querySelector("#itemcount").textContent = "0";
-      // console.log("0");
 
-  } else {
-      let parsedCartItems = [JSON.parse(cartItems)];
-      document.querySelector('#itemcount').textContent = parsedCartItems.length;
-  }
+// function getItemCount() {
+//   let cartItems = localStorage.getItem("so-cart");
+//   if (cartItems === null || typeof cartItems === "undefined") {
+//       document.querySelector("#itemcount").textContent = "0";
+//       // console.log("0");
 
-}
-getItemCount()
+//   } else {
+//       let parsedCartItems = [JSON.parse(cartItems)];
+//       document.querySelector('#itemcount').textContent = parsedCartItems.length;
+//   }
 
-renderCartContents();
+// }
+// getItemCount()
+
+// renderCartContents();
